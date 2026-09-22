@@ -3,12 +3,12 @@
 > tsx scripts/check-submission.ts
 
 {
-  "checkedAt": "2026-09-22T04:40:58.902Z",
-  "changedFiles": 132,
-  "candidateFiles": 185,
-  "sourceAndExportBytes": 4334060,
+  "checkedAt": "2026-09-22T04:43:49.926Z",
+  "changedFiles": 134,
+  "candidateFiles": 187,
+  "sourceAndExportBytes": 4338671,
   "historyBundleBytes": 116637,
-  "conservativeBundleBound": 5273993,
+  "conservativeBundleBound": 5286796,
   "limitBytes": 8388608,
   "scopeCheck": "passed",
   "submodules": 0,
