@@ -17,7 +17,7 @@
   "distributorSourceCommit": "a94632d6ea40fbd2d1bcd8a0aafe53a1619956c6",
   "deploymentBlock": "11755410",
   "round": 0,
-  "serviceRoot": null,
+  "serviceRoot": "0xb2bfb078148d698e3f24ee75fdacfd7b067112bd2b8e14121b6cc9bae73aa32e",
   "snapshotPath": "allocation-snapshot.json",
   "claimsPath": "claims.json"
 }

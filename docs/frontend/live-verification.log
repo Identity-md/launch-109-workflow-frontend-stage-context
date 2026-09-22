@@ -1,3 +1,7 @@
+
+> proof-of-work-claim@1.0.0 verify:live
+> tsx scripts/verify-live.ts
+
 {
   "checkedAt": "2026-09-22T04:39:08.408Z",
   "readsOnly": true,

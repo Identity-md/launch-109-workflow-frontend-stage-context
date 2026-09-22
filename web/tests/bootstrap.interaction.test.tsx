@@ -57,8 +57,8 @@ it('boots exported data, opens stock RainbowKit, connects an injected provider a
   fireEvent.click(await screen.findByRole('button',{name:'Connect Wallet'}));
   expect(await screen.findByRole('dialog')).toBeVisible();
   fireEvent.click(screen.getByRole('button',{name:'Browser Wallet'}));
-  expect(await screen.findByText(/Claims unavailable:/)).toBeVisible();
+  expect(await screen.findByText('Eligible. Your rewards are ready to claim.')).toBeVisible();
   expect(screen.getByTestId('balance')).toHaveTextContent('7 WORK');
   expect(provider.request).toHaveBeenCalledWith(expect.objectContaining({method:'eth_requestAccounts'}));
-  expect(screen.getByRole('button',{name:'Claim'})).toBeDisabled();
+  expect(screen.getByRole('button',{name:'Claim'})).toBeEnabled();
 });

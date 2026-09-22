@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { StandardMerkleTree } from '@openzeppelin/merkle-tree';
-import { abiHash, allocationRoot, canonical, requireThat, validateRows, verifyProof } from '../src/integrity';
+import { abiHash, allocationRoot, canonical, requireServiceRoot, requireThat, validateRows, verifyProof } from '../src/integrity';
 import type { Allocation, Claims, ClaimConfig } from '../src/model';
 
 const read = async (p: string) => JSON.parse(await readFile(p, 'utf8'));
@@ -16,6 +16,11 @@ for (const [a, b] of [[h.launchId, launch.id], [h.chainId, launch.chainId],
   [h.sourceCommit, launch.sourceCommit], [h.attestationHash, launch.attestationHash]]) {
   requireThat(a === b, 'Launch/handoff mismatch');
 }
+const rows: Allocation[] = launch.allocations.map(({wallet, amount}: Allocation) => ({wallet, amount}));
+validateRows(rows);
+const tree = StandardMerkleTree.of(rows.map(r => [r.wallet, r.amount]), ['address', 'uint256']);
+requireThat(tree.root === allocationRoot(rows), 'Independent tree reconstruction mismatch');
+requireServiceRoot(launch.merkleRoot, tree.root);
 const pinned = (path: string) => execFileSync('git', ['show', `${h.sourceCommit}:${path}`], { encoding: 'utf8' });
 const protocol = JSON.parse(pinned('docs/protocol/MerkleDistributor.sources.json'));
 requireThat(protocol.commit === 'a94632d6ea40fbd2d1bcd8a0aafe53a1619956c6', 'Protocol source commit mismatch');
@@ -51,11 +56,6 @@ const d = distributors[0];
 const tokenArtifact = launch.artifacts.find((a: {role: string}) => a.role === 'token');
 requireThat(tokenArtifact?.address.toLowerCase() === h.contracts[0].address.toLowerCase(), 'Token artifact mismatch');
 requireThat(d.txHash === h.contracts[0].txHash && d.blockNumber === h.contracts[0].blockNumber, 'Distributor launch transaction mismatch');
-const rows: Allocation[] = launch.allocations.map(({wallet, amount}: Allocation) => ({wallet, amount}));
-validateRows(rows);
-const tree = StandardMerkleTree.of(rows.map(r => [r.wallet, r.amount]), ['address', 'uint256']);
-requireThat(tree.root === allocationRoot(rows), 'Independent tree reconstruction mismatch');
-if (launch.merkleRoot !== null) requireThat(tree.root.toLowerCase() === launch.merkleRoot.toLowerCase(), 'Service root mismatch');
 const total = rows.reduce((sum, row) => sum + BigInt(row.amount), 0n);
 const breakdown = launch.rewardSnapshot.breakdown;
 requireThat(breakdown.length === rows.length, 'Incomplete reward breakdown');
@@ -80,4 +80,4 @@ for (const [path, data] of Object.entries({ 'claims.json': claims, 'claim-config
     allocations: rows, rewardSnapshot: launch.rewardSnapshot }, 'merkle-tree.json': tree.dump() })) {
   await writeFile(`public/${path}`, JSON.stringify(data, null, 2) + '\n');
 }
-console.log(`Compiled pinned ABIs; attested token hash verified. ${rows.length} proofs; total ${total}; root ${tree.root}. Service root: ${launch.merkleRoot ?? 'MISSING — production claims stay disabled'}.`);
+console.log(`Compiled pinned ABIs; attested token hash verified. ${rows.length} proofs; total ${total}; service and reconstructed root ${tree.root}.`);

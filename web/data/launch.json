@@ -854,11 +854,11 @@
     ],
     "recentContributorBps": 800
   },
-  "merkleRoot": null,
+  "merkleRoot": "0xb2bfb078148d698e3f24ee75fdacfd7b067112bd2b8e14121b6cc9bae73aa32e",
   "provenance": {
     "url": "https://api.imd.fun/launches/ee1f32a2-7f0e-48f1-88c2-1c591e0bdc66",
-    "fetchedAt": "2026-09-22T03:59:03.489238+00:00",
-    "responseSha256": "478d1fd9d191b8c00397cd0f3a020664ba459a363d0dad6615e0410f72142d7a",
-    "selection": "All allocations and reward breakdown preserved; unrelated work/job metadata omitted. merkleRoot absent in response."
+    "fetchedAt": "2026-09-22T04:33:59.741Z",
+    "responseSha256": "99418537b124965b3296bbb328a9e33594bfcf01c64c96b92813f711732e4804",
+    "selection": "All allocations and reward breakdown preserved; unrelated work/job metadata omitted. merkleRoot present in response."
   }
 }

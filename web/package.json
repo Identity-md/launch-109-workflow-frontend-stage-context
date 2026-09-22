@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit",
     "prepare:data": "tsx scripts/prepare.ts",
     "refresh:launch": "tsx scripts/fetch-launch.ts",
-    "build": "npm run prepare:data && vite build && tsx scripts/inventory.ts",
+    "build": "npm run prepare:data && npm run verify:live && vite build && tsx scripts/inventory.ts",
     "preview": "vite preview --host 127.0.0.1",
     "test": "tsx --test tests/*.test.ts",
     "test:interaction": "vitest run --config vitest.config.ts",

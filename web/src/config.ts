@@ -11,7 +11,7 @@ async function json(path: string) {
 export async function loadRuntime(): Promise<Runtime> {
   const deployment: Deployment = await (await json('imd-deployment.json')).json();
   requireThat(deployment.version === 1 && Number.isSafeInteger(deployment.chainId)
-    && deployment.chainId > 0 && deployment.contracts.length === 1
+    && deployment.chainId === 11155111 && deployment.contracts.length === 1
     && deployment.contracts[0].name === 'ProofOfWorkToken'
     && /^[0-9a-f]{40}$/.test(deployment.sourceCommit)
     && /^[0-9a-f]{64}$/.test(deployment.attestationHash), 'Invalid deployment configuration');

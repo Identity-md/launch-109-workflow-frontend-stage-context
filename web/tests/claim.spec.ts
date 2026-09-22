@@ -1,12 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
 import { decodeFunctionData, encodeAbiParameters, encodeEventTopics, encodeFunctionResult, parseAbiItem, type Hex } from 'viem';
 
 const read = (p: string) => JSON.parse(readFileSync(`../dist/${p}`, 'utf8'));
 const manifest = read('imd-deployment.json');
 const config = read('claim-config.json');
-const snapshot = read('allocation-snapshot.json');
 const claims = read('claims.json');
 const tokenAbi = read(manifest.contracts[0].abiPath);
 const distributorAbi = read(config.distributorAbiPath);
@@ -16,7 +14,7 @@ const transaction = `0x${'ab'.repeat(32)}`;
 const blockHash = `0x${'cd'.repeat(32)}`;
 const initialBalance = 7n * 10n ** 18n;
 type Options = { state?: string; noWallet?: boolean; wrongChain?: boolean; reject?: boolean; revert?: boolean;
-  rpcFailure?: boolean; production?: boolean; tamper?: boolean; rootMismatch?: boolean; bindingMismatch?: boolean; noCode?: boolean;
+  rpcFailure?: boolean; tamper?: boolean; rootMismatch?: boolean; bindingMismatch?: boolean; noCode?: boolean;
   simulationRevert?: boolean; firstRpcFails?: boolean; logsFailure?: boolean; sweep?: boolean; receiptFailure?: boolean };
 
 async function setup(page: Page, options: Options = {}) {
@@ -34,16 +32,8 @@ async function setup(page: Page, options: Options = {}) {
       }
       return route.abort();
     }
-    if (!options.production && ['imd-deployment.json','claim-config.json','allocation-snapshot.json'].some(p => url.pathname.endsWith(p))) {
-      const c = {...config, serviceRoot: claims.root};
-      const s = {...snapshot, serviceRoot: claims.root};
-      const overrides: Record<string, object> = { 'claim-config.json': c, 'allocation-snapshot.json': s };
-      const inventory = structuredClone(manifest);
-      for (const asset of inventory.assets) if (overrides[asset.path]) asset.sha256 = createHash('sha256').update(JSON.stringify(overrides[asset.path])).digest('hex');
-      const path = url.pathname.split('/').at(-1)!;
-      if (path === 'imd-deployment.json') return route.fulfill({ json: inventory });
-      if (options.tamper && path === 'claim-config.json') return route.fulfill({ json: {...c, round: 1} });
-      return route.fulfill({ body: JSON.stringify(overrides[path]), contentType: 'application/json' });
+    if (options.tamper && url.pathname.endsWith('claim-config.json')) {
+      return route.fulfill({ json: {...config, round: 1} });
     }
     return route.continue();
   });
@@ -139,7 +129,7 @@ async function connect(page: Page) {
 
 test('disconnected and missing wallet: plain page, no claim', async ({page}) => {
   const errors:string[] = []; page.on('pageerror', e => errors.push(e.message));
-  await setup(page,{noWallet:true,production:true});
+  await setup(page,{noWallet:true});
   await expect(page.getByRole('heading',{name:'Proof Of Work'})).toBeVisible();
   await expect(page.getByRole('button',{name:'Claim',exact:true})).toBeDisabled();
   await page.getByRole('button',{name:'Connect Wallet',exact:true}).click();
@@ -204,11 +194,11 @@ test('tampered deployment asset fails integrity validation', async ({page}) => {
   await expect(page.getByRole('alert')).toContainText('Asset integrity failure');
   await expect(page.getByRole('button',{name:'Claim',exact:true})).toBeDisabled();
 });
-test('actual export blocks claims with missing service root and remains plain at desktop/mobile widths', async ({page}) => {
+test('actual export enables verified claims and remains plain at desktop/mobile widths', async ({page}) => {
   const errors:string[]=[]; page.on('pageerror',e=>errors.push(e.message));
-  await setup(page,{production:true}); await connect(page);
-  await expect(page.getByText('Claims unavailable:',{exact:false})).toBeVisible();
-  await expect(page.getByRole('button',{name:'Claim',exact:true})).toBeDisabled();
+  await setup(page); await connect(page);
+  await expect(page.getByText('Eligible. Your rewards are ready to claim.')).toBeVisible();
+  await expect(page.getByRole('button',{name:'Claim',exact:true})).toBeEnabled();
   for (const [name,width,height] of [['desktop',1280,900],['mobile',375,812]] as const) {
     await page.setViewportSize({width,height});
     expect(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth)).toBe(true);

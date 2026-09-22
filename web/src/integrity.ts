@@ -13,6 +13,10 @@ export const abiHash = (abi: unknown) => keccak256(stringToHex(canonical(abi))).
 export function requireThat(ok: unknown, message: string): asserts ok {
   if (!ok) throw new Error(message);
 }
+export function requireServiceRoot(root: unknown, reconstructed: string): asserts root is Hex {
+  requireThat(typeof root === 'string' && /^0x[0-9a-f]{64}$/.test(root), 'Missing or malformed service Merkle root');
+  requireThat(root === reconstructed, 'Service root mismatch');
+}
 export function safePath(path: string) {
   requireThat(typeof path === 'string' && /^(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_.-]+$/.test(path)
     && !path.split('/').some(p => p === '..' || p === '.'), 'Invalid export path');

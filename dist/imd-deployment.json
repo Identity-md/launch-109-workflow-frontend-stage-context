@@ -23,7 +23,7 @@
     },
     {
       "path": "allocation-snapshot.json",
-      "sha256": "cf1cbb5d8db9165756816787e21837dfe8060ed9763a2da188fd5c66f36717e4"
+      "sha256": "91b0c1a401f3839bdecc7d58dc034789acfd01a3b20b232ff044c57e21a63302"
     },
     {
       "path": "assets/Arc-VDBY7LNS-BChRXCXW.js",
@@ -106,8 +106,8 @@
       "sha256": "2f3b4d3ed68fb26bfe60c61f6222c03c026de7a20eaf031c0d4cc7b14c6d275e"
     },
     {
-      "path": "assets/ccip-XGBied8t.js",
-      "sha256": "2c10171dca690fe0e25bc7bc0969d65597fdff2f4f1c31b2586897d6a97ead58"
+      "path": "assets/ccip-BDv2wjil.js",
+      "sha256": "c592046daf131eb8cc48126d2738a75a497d1635b8e1c418ab4498ad0e75336e"
     },
     {
       "path": "assets/celo-GEP4TUHG-CenIBYLU.js",
@@ -174,12 +174,12 @@
       "sha256": "4faa98f62b2ba891480c1b27124427cfb9a99195fc809cb9c27edf3c631c0799"
     },
     {
-      "path": "assets/index-CcVPgXVa.css",
-      "sha256": "fad41f7bb01dd8aa28350d74a4a4c4a88973295b850ac8702e07086a256825ac"
+      "path": "assets/index-C-394cI5.js",
+      "sha256": "85dd32018a3c5984d2c0d833dc6715e8b29cbe606c2ce247aff9437daaf52614"
     },
     {
-      "path": "assets/index-D4EdD6yc.js",
-      "sha256": "fe7bdf62b6fa33eb0048c5489dddaf0e839e9077dfc8b633906334aa5f8708a6"
+      "path": "assets/index-CcVPgXVa.css",
+      "sha256": "fad41f7bb01dd8aa28350d74a4a4c4a88973295b850ac8702e07086a256825ac"
     },
     {
       "path": "assets/injectedWallet-AWJSZPMG-Df9x-YJA.js",
@@ -319,7 +319,7 @@
     },
     {
       "path": "claim-config.json",
-      "sha256": "d4306620f2b6b56170f9fb8145fa7f227bf93de6bbf649d947ac422bca248884"
+      "sha256": "db3343a6c072423e3c363dbc85fd5faa0165b899a37edc1184b3432fb4adc628"
     },
     {
       "path": "claims.json",
@@ -327,7 +327,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "2a7532d65e54cb55130a90d5e5c1c0b3685d42f271b39300bb0e263835d04941"
+      "sha256": "38c0ce5bb1cf3092cbb722b369b7eca9bc88bb9cebec83304ceeae308ff47a24"
     },
     {
       "path": "merkle-tree.json",
