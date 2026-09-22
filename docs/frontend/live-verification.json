@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-09-22T04:03:40.690Z",
+  "readsOnly": true,
+  "walletRead": "0x0000000000000000000000000000000000000000",
+  "live": {
+    "block": "11755444",
+    "blockHash": "0xf75071ffc58da9ba501a0d5e130637ba00829d587221cafd884f748ff10e5f31",
+    "timestamp": "1790049816",
+    "root": "0xb2bfb078148d698e3f24ee75fdacfd7b067112bd2b8e14121b6cc9bae73aa32e",
+    "funded": "100000000000000000000000000",
+    "totalClaimed": "0",
+    "unlocksAt": "1790052972",
+    "sweepableAt": "1821585372",
+    "distributorBalance": "100000000000000000000000000",
+    "balance": "0",
+    "claimed": false,
+    "decimals": 18,
+    "positiveSweep": false,
+    "serviceVerified": false,
+    "rpc": "https://ethereum-sepolia-rpc.publicnode.com"
+  },
+  "crossChecks": [
+    {
+      "url": "https://ethereum-sepolia.gateway.tatum.io",
+      "chainId": 11155111,
+      "blockHash": "0xf75071ffc58da9ba501a0d5e130637ba00829d587221cafd884f748ff10e5f31",
+      "matches": true
+    }
+  ],
+  "limitation": "API omits launch.merkleRoot. Rebuilt snapshot agrees with on-chain root, but service-root comparison is unresolved; production claims disabled."
+}

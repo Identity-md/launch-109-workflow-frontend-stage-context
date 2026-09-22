@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-09-22T04:22:15.593Z",
+  "changedFiles": 120,
+  "candidateFiles": 173,
+  "sourceAndExportBytes": 4269746,
+  "historyBundleBytes": 116637,
+  "conservativeBundleBound": 5160527,
+  "limitBytes": 8388608,
+  "scopeCheck": "passed",
+  "submodules": 0,
+  "dependencyArtifacts": 0,
+  "gitCommitStatus": "Not committed: git add denied creating .git/index.lock (Operation not permitted).",
+  "boundMethod": "All candidate file bytes plus complete existing Git history bundle, 4096 bytes per file and 64 KiB reserve. This is a conservative size check, not a new committed bundle."
+}
